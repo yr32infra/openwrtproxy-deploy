@@ -1,0 +1,58 @@
+version: '3.9'
+
+services:
+  nginx:
+    image: nginx:1.25.2@sha256:48a84a0728cab8ac558f48796f901f6d31d287101bc8b317683678125e0d2d35
+    hostname: nginx
+    container_name: openwrtproxy__nginx
+
+    restart: unless-stopped
+
+    volumes:
+      - type: bind
+        source: ./nginx.conf
+        target: /etc/nginx/nginx.conf
+        read_only: true
+
+      - type: volume
+        source: cache_data
+        target: /var/cache/nginx
+
+    deploy:
+      resources:
+        limits:
+          memory: 128m
+
+    networks:
+      - default
+
+  cloudflared:
+    image: cloudflare/cloudflared:2023.7.3@sha256:551fbcfb9f76b8dbac397c55f468cfe3b09e0f4332f355118b4f5d904d66c028
+    hostname: cloudflared
+    container_name: openwrtproxy__cloudflared
+
+    restart: unless-stopped
+
+    environment:
+      TUNNEL_METRICS: 0.0.0.0:9126
+      TUNNEL_LOGFILE: /dev/stdout
+
+    command: tunnel run --token ${TUNNEL_TOKEN}
+    user: root
+
+    deploy:
+      resources:
+        limits:
+          memory: 128m
+
+    networks:
+      default:
+
+volumes:
+  cache_data:
+    name: openwrtproxy__cache_data
+
+
+networks:
+  default:
+    name: openwrtproxy__default
