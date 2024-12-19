@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   nginx:
-    image: nginx:1.25.2@sha256:b4af4f8b6470febf45dc10f564551af682a802eda1743055a7dfc8332dffa595
+    image: nginx:1.27.3@sha256:fb197595ebe76b9c0c14ab68159fd3c08bd067ec62300583543f0ebda353b5be
     hostname: nginx
     container_name: openwrtproxy__nginx
 
