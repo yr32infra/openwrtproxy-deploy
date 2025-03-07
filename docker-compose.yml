@@ -27,7 +27,7 @@ services:
       - default
 
   cloudflared:
-    image: cloudflare/cloudflared:2024.12.1@sha256:fc6afe4a5dcf2a801b39fcd538c9d5d4d53ea229fe9976584835bdb8c185ed5d
+    image: cloudflare/cloudflared:2025.2.1@sha256:03737f27c38ecfb257a55664953cac510727cf27052c51ddb7c8ff1a2b9969e1
     hostname: cloudflared
     container_name: openwrtproxy__cloudflared
 
